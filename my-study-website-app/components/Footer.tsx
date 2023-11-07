@@ -3,11 +3,10 @@ import Image from "next/image"
 import Link from "next/link"
 
 interface FooterColumnType{
-    key: string
     title: string,
     links: string[]
 }
-const FooterColumn = ({ key, title, links }: FooterColumnType) => {
+const FooterColumn = ({ title, links }: FooterColumnType) => {
     return(
         <div className="footer_column">
             <h1 className="font-semibold">{title}</h1>
