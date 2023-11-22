@@ -1,8 +1,9 @@
 import { Session, User } from "next-auth";
+import { MouseEventHandler } from "react";
 
 export type userSignUpInfo = {
-  email: string,
-  name: string,
+  email: string;
+  name: string;
   avatarUrl: string
 }
 
@@ -24,6 +25,34 @@ export type Provider = {
 
 export type Providers = Record<string, Provider>
 
+export type projectFormType = {
+  type: string;
+  session: SessionInterface
+}
+
+export type FormFieldType = {
+  title: string;
+  state: string;
+  isTextArea?: boolean;
+  setState: (value: string) => void;
+}
+
+export type CustomMenuType = {
+  title: string;
+  state: string;
+  filters: string[];
+  setState: (value: string) => void
+}
+
+export type CustomButtonType = {
+  title: string;
+  leftIcon?: string | null;
+  rightIcon?: string | null;
+  handleClick?: MouseEventHandler;
+  isSubmitting: boolean;
+  bgColor?: string;
+  textColor?: string;
+}
 export interface SessionInterface extends Session{
     user: User & userBasicInfo
 }
@@ -56,3 +85,4 @@ export interface UserProfile {
       };
     };
 }
+
