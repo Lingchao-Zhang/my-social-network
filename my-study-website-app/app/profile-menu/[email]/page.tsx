@@ -7,6 +7,7 @@ import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { SessionInterface } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
+import { createQueryString } from "@/utils";
 
 const ProfileMenu = ({ session }: { session: SessionInterface }) => {
     // minato.yukina@Roselia.com
@@ -96,9 +97,16 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                     </Menu.Items>
                 </Transition>
             </Menu>
-            <Link href="/">
-                {sharework}
-            </Link>
+            {
+                session ? 
+                <Link href={`/create-project?${createQueryString('session', JSON.stringify(session))}`}>
+                    {sharework}
+                </Link>
+            :
+                <Link href={`../create-project?${createQueryString('session', JSON.stringify(userSession))}`}>
+                    {sharework}
+                </Link>
+            }
         </div>
     )
 }

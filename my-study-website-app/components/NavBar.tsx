@@ -1,7 +1,7 @@
 import { NavLinks } from "@/constants"
 import Image from "next/image"
 import Link from "next/link"
-import ProfileMenu from "../app/ProfileMenu/[email]/page"
+import ProfileMenu from "../app/profile-menu/[email]/page"
 import AuthProvider from "./AuthProvider"
 import { getCurrentUser } from "@/lib/session"
 

@@ -35,7 +35,7 @@ const UserSignUp = () => {
     
                 if(!userExist.user){
                     await createUser(userInfo.name, userInfo.email, userInfo.avatarUrl)
-                    router.push('./UserSignIn')
+                    router.push('./user-sign-in')
                     alert("Sign up successfully")
                 } else{
                     alert("this email has already been registered")
@@ -67,7 +67,7 @@ const UserSignUp = () => {
                             </div>
                             <button onClick={handleOnSignUp} className="w-full text-white bg-violet-400 hover:bg-violet-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create an account</button>
                             <p className="text-sm font-light text-gray-500">
-                                Already have an account? <Link href="./UserSignIn" className="font-medium text-primary-600 hover:underline">Sign in here</Link>
+                                Already have an account? <Link href="./user-sign-in" className="font-medium text-primary-600 hover:underline">Sign in here</Link>
                             </p>
                         </div>
                     </div>

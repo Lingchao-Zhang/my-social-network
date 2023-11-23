@@ -5,16 +5,11 @@ import { useState } from "react";
 import { UserProfile } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { createQueryString } from "@/utils";
 
 const UserSignIn = () => {
     const [userEmail, setUserEmail] = useState("")
     const router = useRouter()
-    const createQueryString = (name: string, value: string) => {
-        const params = new URLSearchParams();
-        params.set(name, value);
-    
-        return params.toString();
-      };
     
     const handleOnSignIn = async () => {
         if(userEmail === ""){
@@ -25,7 +20,7 @@ const UserSignIn = () => {
                 if(!userExist.user){
                     alert("User not exist!")
                 } else{
-                    router.push(`./ProfileMenu/${userExist.user.email}?${createQueryString('session', JSON.stringify(userExist))}`)
+                    router.push(`./profile-menu/${userExist.user.email}?${createQueryString('session', JSON.stringify(userExist))}`)
                 }
 
             }catch(error: any){
@@ -49,7 +44,7 @@ const UserSignIn = () => {
                             </div>
                             <button onClick={handleOnSignIn} className="w-full text-white  bg-violet-400 hover:bg-violet-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Sign In</button>
                             <p className="text-sm font-light text-gray-500">
-                                Don't have an account? <Link href="./UserSignUp" className="font-medium text-primary-600 hover:underline">Sign Up here</Link>
+                                Don't have an account? <Link href="./user-sign-up" className="font-medium text-primary-600 hover:underline">Sign Up here</Link>
                             </p>
                         </div>
                     </div>
