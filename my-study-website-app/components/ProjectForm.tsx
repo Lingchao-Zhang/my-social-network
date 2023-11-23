@@ -6,6 +6,8 @@ import FormField from "./FormField"
 import CustomMenu from "./CustomMenu"
 import { categoryFilters } from "@/constants"
 import CustomButton from "./CustomButton"
+import { createNewProject, fetchToken } from "@/lib/actions"
+import { useRouter } from "next/navigation"
 
 const ProjectForm = ({ type, session }: projectFormType) => {
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -18,8 +20,23 @@ const ProjectForm = ({ type, session }: projectFormType) => {
         category: "",
     }
 )
-    const handleFormSubmit = (event: FormEvent) => {
-    
+    const router = useRouter()
+
+    const handleFormSubmit = async (event: FormEvent) => {
+        event.preventDefault()
+
+        const { token } = await fetchToken()
+        try{
+            if(type === 'create'){
+                await createNewProject(form, session.user?.id, token)
+                alert("You have successfully created a new project!")
+                router.back()
+            }
+        } catch(error){
+            throw error
+        } finally{
+            setIsSubmitting(false)
+        }
     }
 
     const handleChangeImage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -112,6 +129,7 @@ const ProjectForm = ({ type, session }: projectFormType) => {
                  title={`${isSubmitting ? (type === 'create' ? 'Creating' : 'Editing') : (type === 'create' ? 'Create' : 'Edit')}`}
                  leftIcon={isSubmitting ? null : '/plus.svg'}
                  isSubmitting={isSubmitting}
+                 handleClick={() => setIsSubmitting(true)}
                  bgColor="bg-[#3344AA]"
                  textColor="text-white"
                  />
