@@ -53,6 +53,27 @@ export type CustomButtonType = {
   bgColor?: string;
   textColor?: string;
 }
+
+export type ProjectSearch = {
+  projectSearch: {
+    edges: {node: ProjectInterface} [];
+    pageInfo: {
+      hasPreviousPage: boolean;
+      hasNextPage: boolean;
+      startCursor: string;
+      endCursor: string;
+    }
+  }
+}
+
+export type ProjectCardType = {
+  id: string;
+  image: string;
+  title: string;
+  userId: string;
+  userName: string;
+  avatarUrl: string;
+}
 export interface SessionInterface extends Session{
     user: User & userBasicInfo
 }
@@ -94,4 +115,5 @@ export interface ProjectFormInfo {
     githubUrl: string;
     category: string;
 }
+
 

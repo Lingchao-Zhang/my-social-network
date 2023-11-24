@@ -44,4 +44,64 @@ const createProjectMutation = `
 	}
 `;
 
-export { getUserQuery, createUserMutation, createProjectMutation }
+const projectsQuery = `
+  query getProjects($category: String, $endCursor: String) {
+    projectSearch(first: 8, after: $endCursor, filter: {category: {eq: $category}}) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          title
+          githubUrl
+          description
+          liveSiteUrl
+          id
+          image
+          category
+          createdBy {
+            id
+            email
+            name
+            avatarUrl
+          }
+        }
+      }
+    }
+  }
+`;
+
+const allProjectsQuery = `
+  query getProjects() {
+    projectSearch(first: 100) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          title
+          githubUrl
+          description
+          liveSiteUrl
+          id
+          image
+          category
+          createdBy {
+            id
+            email
+            name
+            avatarUrl
+          }
+        }
+      }
+    }
+  }
+`;
+
+export { getUserQuery, createUserMutation, createProjectMutation, projectsQuery, allProjectsQuery }

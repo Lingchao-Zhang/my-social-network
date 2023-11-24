@@ -1,4 +1,4 @@
-import { createProjectMutation, createUserMutation, getUserQuery } from "@/graphql"
+import { allProjectsQuery, createProjectMutation, createUserMutation, getUserQuery, projectsQuery } from "@/graphql"
 import { ProjectFormInfo } from "@/types"
 import { GraphQLClient } from "graphql-request"
 
@@ -76,4 +76,20 @@ const createNewProject = async (form: ProjectFormInfo, creatorId: string, token:
         return newProject
     }
 }
-export {getUser, createUser, createNewProject, uploadImage, fetchToken}
+
+const fetchAllProjects = () => {
+    client.setHeader('x-api-key', apiKey)
+
+    const allProjects = makeGraphQlRequest(allProjectsQuery)
+    return allProjects
+}
+
+const getProjectsByCategoryAndCursor = (category?: string, endCursor?: string) => {
+    client.setHeader('x-api-key', apiKey)
+
+    const allProjects = makeGraphQlRequest(projectsQuery, { category,endCursor })
+    return allProjects
+
+}
+export { getUser, createUser, createNewProject, uploadImage, fetchToken, fetchAllProjects,
+    getProjectsByCategoryAndCursor }
