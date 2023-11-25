@@ -104,4 +104,24 @@ const allProjectsQuery = `
   }
 `;
 
-export { getUserQuery, createUserMutation, createProjectMutation, projectsQuery, allProjectsQuery }
+const getProjectByIdQuery = `
+  query GetProjectById($id: ID!) {
+    project(by: { id: $id }) {
+      id
+      title
+      description
+      image
+      liveSiteUrl
+      githubUrl
+      category
+      createdBy {
+        id
+        name
+        email
+        avatarUrl
+      }
+    }
+  }
+`
+
+export { getUserQuery, createUserMutation, createProjectMutation, projectsQuery, allProjectsQuery, getProjectByIdQuery }

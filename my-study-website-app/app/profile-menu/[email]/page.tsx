@@ -10,7 +10,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { createQueryString } from "@/utils";
 
 const ProfileMenu = ({ session }: { session: SessionInterface }) => {
-    // minato.yukina@Roselia.com
     const searchParams = useSearchParams().get('session')
     const sessionInfo = searchParams ? JSON.parse(searchParams) : {user: {}}
     const userSession = session ? session : sessionInfo
