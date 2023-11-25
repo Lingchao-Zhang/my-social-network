@@ -123,5 +123,33 @@ const getProjectByIdQuery = `
     }
   }
 `
+const getProjectsOfUserQuery = `
+  query getUserProjects($id: ID!, $last: Int = 4) {
+    user(by: { id: $id }) {
+      id
+      name
+      email
+      description
+      avatarUrl
+      githubUrl
+      linkedInUrl
+      projects(last: $last) {
+        edges {
+          node {
+            id
+            title
+            image
+            createdBy {
+              id
+              name
+              email
+              avatarUrl
+            }
+          }
+        }
+      }
+    }
+  }
+`
 
-export { getUserQuery, createUserMutation, createProjectMutation, projectsQuery, allProjectsQuery, getProjectByIdQuery }
+export { getUserQuery, createUserMutation, createProjectMutation, projectsQuery, allProjectsQuery, getProjectByIdQuery, getProjectsOfUserQuery }

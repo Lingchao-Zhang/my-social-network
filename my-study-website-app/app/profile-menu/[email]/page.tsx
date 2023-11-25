@@ -102,9 +102,14 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                     {sharework}
                 </Link>
             :
-                <Link href={`../create-project?${createQueryString('session', JSON.stringify(userSession))}`}>
-                    {sharework}
-                </Link>
+                <>
+                    <Link href={`../create-project?${createQueryString('session', JSON.stringify(userSession))}`}>
+                        {sharework}
+                    </Link>
+                    <Link href={"../"}>
+                        view all projects
+                    </Link>
+                </>
             }
         </div>
     )

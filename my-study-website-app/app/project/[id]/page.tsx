@@ -1,4 +1,4 @@
-import { Modal } from "@/components"
+import { Modal, RelatedProjects } from "@/components"
 import { getProjectById } from "@/lib/actions"
 import { ProjectInterface } from "@/types"
 import Image from "next/image"
@@ -60,9 +60,27 @@ const ProjectById = async ({ params: { id }}: { params: { id: string }}) => {
                         </Link>
                     </div>
                 </section>
+
+                <section className="flexCenter w-full gap-8 mt-28">
+                    <span className="w-full h-0.5 bg-light-white-200" />
+                    <Link href={userProfileLink} className="min-w-[82px] h-[82px]">
+                        <Image
+                            src={project.createdBy.avatarUrl}
+                            className="rounded-full"
+                            width={82}
+                            height={82}
+                            alt="profile image"
+                        />
+                    </Link>
+                    <span className="w-full h-0.5 bg-light-white-200" />
+                </section>
+                
+                <RelatedProjects 
+                 userId={project.createdBy.id}
+                 projectId={project.id}/>
             </Modal>
-        :
-        <p className="no-result">Failed to fetch the project info</p>
+            :
+            <p className="no-result">Failed to fetch the project info</p>
     )
 }
 

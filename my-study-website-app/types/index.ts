@@ -74,6 +74,11 @@ export type ProjectCardType = {
   userName: string;
   avatarUrl: string;
 }
+
+export type RelatedProjectType = {
+  userId: string;
+  projectId: string;
+}
 export interface SessionInterface extends Session{
     user: User & userBasicInfo
 }
