@@ -20,7 +20,7 @@ const UserSignIn = () => {
                 if(!userExist.user){
                     alert("User not exist!")
                 } else{
-                    router.push(`./profile-menu/${userExist.user.email}?${createQueryString('session', JSON.stringify(userExist))}`)
+                    router.push(`./?${createQueryString('session', JSON.stringify(userExist))}`)
                 }
 
             }catch(error: any){

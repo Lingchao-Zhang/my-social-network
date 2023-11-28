@@ -2,7 +2,7 @@ import { getProjectsByUser } from "@/lib/actions"
 import { ProjectInterface, RelatedProjectType, UserProfile } from "@/types"
 import ProjectCard from "./ProjectCard"
 
-const RelatedProjects = async ({ userId, projectId }: RelatedProjectType) => {
+const RelatedProjects = async ({ userId, projectId, userSession }: RelatedProjectType) => {
     const result = await getProjectsByUser(userId) as {user?: UserProfile}
     const projects = result.user?.projects?.edges ? result.user.projects.edges : []
     
@@ -24,6 +24,7 @@ const RelatedProjects = async ({ userId, projectId }: RelatedProjectType) => {
                      userId={node.createdBy.id}
                      userName={node.createdBy.name}
                      avatarUrl={node.createdBy.avatarUrl} 
+                     currentUser={userSession}
                      />
                 ))
             }

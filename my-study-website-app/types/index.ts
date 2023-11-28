@@ -1,4 +1,3 @@
-import { Session, User } from "next-auth";
 import { MouseEventHandler } from "react";
 
 export type userSignUpInfo = {
@@ -7,27 +6,17 @@ export type userSignUpInfo = {
   avatarUrl: string
 }
 
-export type userBasicInfo = {
+export type userInfo = {
   id: string
   name: string
   email: string
   avatarUrl: string
 }
 
-export type Provider = {
-    id: string
-    name: string
-    type: string
-    signinUrl: string
-    callbackUrl: string
-    signinUrlParams?: Record<string, string> | null
-}
-
-export type Providers = Record<string, Provider>
-
 export type projectFormType = {
   type: string;
-  session: SessionInterface
+  session: SessionInterface;
+  project?: ProjectInterface
 }
 
 export type FormFieldType = {
@@ -49,7 +38,7 @@ export type CustomButtonType = {
   leftIcon?: string | null;
   rightIcon?: string | null;
   handleClick?: MouseEventHandler;
-  isSubmitting: boolean;
+  isSubmitting?: boolean;
   bgColor?: string;
   textColor?: string;
 }
@@ -66,6 +55,11 @@ export type ProjectSearch = {
   }
 }
 
+export type ParamsType = {
+  params: { id: string };
+  searchParams: { session: string}
+}
+
 export type ProjectCardType = {
   id: string;
   image: string;
@@ -73,14 +67,41 @@ export type ProjectCardType = {
   userId: string;
   userName: string;
   avatarUrl: string;
+  currentUser: SessionInterface
 }
 
 export type RelatedProjectType = {
   userId: string;
   projectId: string;
+  userSession: SessionInterface
 }
-export interface SessionInterface extends Session{
-    user: User & userBasicInfo
+
+export type ProjectActionsType = {
+  projectId: string;
+  currentUser: SessionInterface
+}
+
+export type HomeSearchParamsType = {
+  searchParams: {
+    session: string,
+    category?: string,
+    endCursor?: string
+  }
+}
+
+export type PaginationType = {
+  startCursor: string;
+  endCursor: string;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+}
+
+export type ProfilePageType = {
+  user: UserProfile,
+  currentUser: SessionInterface
+}
+export interface SessionInterface{
+    user: userInfo
 }
 
 export interface ProjectInterface {
@@ -91,7 +112,7 @@ export interface ProjectInterface {
     githubUrl: string;
     category: string;
     id: string;
-    createdBy: userBasicInfo;
+    createdBy: userInfo;
 }
 export interface UserProfile {
     id: string;

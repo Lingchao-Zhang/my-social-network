@@ -1,13 +1,16 @@
 import { Modal, RelatedProjects } from "@/components"
+import ProjectActions from "@/components/ProjectActions"
 import { getProjectById } from "@/lib/actions"
-import { ProjectInterface } from "@/types"
+import { ParamsType, ProjectInterface } from "@/types"
+import { createQueryString } from "@/utils"
 import Image from "next/image"
 import Link from "next/link"
 
-const ProjectById = async ({ params: { id }}: { params: { id: string }}) => {
+const ProjectById = async ({ params: { id }, searchParams: { session }}: ParamsType) => {
     const result = await getProjectById(id) as { project?: ProjectInterface }
     const project = result.project ? result.project : undefined
-    const userProfileLink = `../profile/${project?.createdBy.id}`
+    const userSession = session ? JSON.parse(session) : {}
+    const userProfileLink = `../profile/${project?.createdBy.id}?${createQueryString('session', session)}`
     return(
         project ?
             <Modal>
@@ -30,14 +33,23 @@ const ProjectById = async ({ params: { id }}: { params: { id: string }}) => {
                                     {project.createdBy.name}
                                 </Link>
                                 <Image src="/dot.svg" width={4} height={4} alt="dot" />
-                                <Link href={`/?category=${project.category}`} className="text-primary-purple font-semibold"> 
+                                <Link href={`/?category=${project.category}&${createQueryString('session', session)}`} className="text-primary-purple font-semibold"> 
                                         {project.category}
                                 </Link>
                             </div>
                         </div>
                     </div>
+
+                    {
+                        userSession.user && (userSession.user.id === project.createdBy.id) ? 
+                        <ProjectActions 
+                        projectId={project.id}
+                        currentUser={userSession}/>
+                        :
+                        <></>
+                    }
                 </section>
-                <section>
+                <section className="mt-14">
                     <Image 
                         className="object-cover rounded-2xl"
                         src={project.image}
@@ -77,7 +89,8 @@ const ProjectById = async ({ params: { id }}: { params: { id: string }}) => {
                 
                 <RelatedProjects 
                  userId={project.createdBy.id}
-                 projectId={project.id}/>
+                 projectId={project.id}
+                 userSession={userSession}/>
             </Modal>
             :
             <p className="no-result">Failed to fetch the project info</p>

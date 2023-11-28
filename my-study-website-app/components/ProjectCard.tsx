@@ -1,10 +1,11 @@
 'use client'
 import { ProjectCardType } from "@/types"
+import { createQueryString } from "@/utils"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
-const ProjectCard = ({id, image, title, userId, userName, avatarUrl}: ProjectCardType) => {
+const ProjectCard = ({id, image, title, userId, userName, avatarUrl, currentUser}: ProjectCardType) => {
     const [randomLikes, setRandomLikes] = useState(0)
     const [randomViews, setRandomViews] = useState('')
 
@@ -14,7 +15,7 @@ const ProjectCard = ({id, image, title, userId, userName, avatarUrl}: ProjectCar
     },[])
     return(
         <div className="flexCenter flex-col rounded-2xl drop-shadow-card">
-            <Link href={`/project/${id}`} className="flexCenter group relative w-full h-full">
+            <Link href={`/project/${id}?${createQueryString('session', JSON.stringify(currentUser))}`} className="flexCenter group relative w-full h-full">
                 <Image 
                  src={image}
                  width={414}
@@ -29,7 +30,7 @@ const ProjectCard = ({id, image, title, userId, userName, avatarUrl}: ProjectCar
             </Link>
 
             <div className="flexBetween w-full px-2 mt-3 font-semibold text-sm">
-                <Link href={`/profile/${userId}`}>
+                <Link href={`/profile/${userId}?${createQueryString('session', JSON.stringify(currentUser))}`}>
                     <div className="flexCenter gap-2">
                         <Image 
                          src={avatarUrl}
@@ -44,7 +45,7 @@ const ProjectCard = ({id, image, title, userId, userName, avatarUrl}: ProjectCar
             <div className="flexCenter gap-3">
                 <div className="flexCenter gap-2">
                     <Image 
-                     src="/hearth.svg"
+                     src="/heart.svg"
                      width={13}
                      height={12}
                      alt="heart"

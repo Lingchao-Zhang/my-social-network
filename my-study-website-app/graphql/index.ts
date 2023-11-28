@@ -46,7 +46,7 @@ const createProjectMutation = `
 
 const projectsQuery = `
   query getProjects($category: String, $endCursor: String) {
-    projectSearch(first: 8, after: $endCursor, filter: {category: {eq: $category}}) {
+    projectSearch(first: 2, after: $endCursor, filter: {category: {eq: $category}}) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -75,8 +75,8 @@ const projectsQuery = `
 `;
 
 const allProjectsQuery = `
-  query getProjects() {
-    projectSearch(first: 100) {
+  query getProjects($endCursor: String) {
+    projectSearch(first: 3, after: $endCursor) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -152,4 +152,27 @@ const getProjectsOfUserQuery = `
   }
 `
 
-export { getUserQuery, createUserMutation, createProjectMutation, projectsQuery, allProjectsQuery, getProjectByIdQuery, getProjectsOfUserQuery }
+const updateProjectMutation = `
+	mutation UpdateProject($id: ID!, $input: ProjectUpdateInput!) {
+		projectUpdate(by: { id: $id }, input: $input) {
+			project {
+				id
+				title
+				description
+				createdBy {
+					email
+					name
+				}
+			}
+		}
+	}
+`
+const deleteProjectMutation = `
+  mutation DeleteProject($id: ID!) {
+    projectDelete(by: { id: $id }) {
+      deletedId
+    }
+  }
+`
+
+export { getUserQuery, createUserMutation, createProjectMutation, projectsQuery, allProjectsQuery, getProjectByIdQuery, getProjectsOfUserQuery, updateProjectMutation, deleteProjectMutation}
