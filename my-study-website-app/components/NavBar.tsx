@@ -1,17 +1,21 @@
+'use client'
+
 import { NavLinks } from "@/constants"
 import Image from "next/image"
 import Link from "next/link"
-import ProfileMenu from "../app/profile-menu/[email]/page"
+import ProfileMenu from "./ProfileMenu"
 import AuthProvider from "./AuthProvider"
-import { getCurrentUser } from "@/lib/session"
+import { useSearchParams } from "next/navigation"
+import { createQueryString } from "@/utils"
 
-const NavBar = async () => {
-    const session = await getCurrentUser()
-
+const NavBar = () => {
+    const sessionParams = useSearchParams().get('session')
+    const userSession = sessionParams ? JSON.parse(sessionParams) : {}
+    
     return(
         <nav className="flexBetween navbar">
             <div className="flex-1 flexStart gap-10">
-                <Link href="/">
+                <Link href={`/?${createQueryString('session', JSON.stringify(userSession))}`}>
                     <Image 
                       src="/logo.svg"
                       width={115}
@@ -29,9 +33,9 @@ const NavBar = async () => {
             </div>
             <div className="flexCenter gap-4">
                 {
-                    session?.user 
+                    userSession.user 
                     ? 
-                    <ProfileMenu session={session} />
+                    <ProfileMenu session={userSession} />
                     :
                     <AuthProvider />
                 }

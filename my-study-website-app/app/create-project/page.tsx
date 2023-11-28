@@ -4,7 +4,7 @@ import { redirect, useSearchParams } from "next/navigation"
 
 const CreateProject = () => {
     const sessionParam = useSearchParams().get('session')
-    const userSession = sessionParam ? JSON.parse(sessionParam) : {user: {}}
+    const userSession = sessionParam ? JSON.parse(sessionParam) : {}
 
     if(!userSession?.user){
         redirect('/')

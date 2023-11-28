@@ -17,7 +17,7 @@ export type Schema = {
     name: string;
     email: string;
     description: string | null;
-    project?: Array<Schema['Project']> | null;
+    projects?: Array<Schema['Project']> | null;
   };
   'Project': {
     __typename?: 'Project';

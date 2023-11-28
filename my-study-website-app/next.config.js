@@ -6,6 +6,10 @@ const nextConfig = {
           {
             protocol: 'https',
             hostname: 't4.ftcdn.net'
+          },
+          {
+            protocol: 'http',
+            hostname: 'res.cloudinary.com'
           }
         ]
       },

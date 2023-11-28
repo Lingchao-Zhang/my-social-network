@@ -6,18 +6,19 @@ import FormField from "./FormField"
 import CustomMenu from "./CustomMenu"
 import { categoryFilters } from "@/constants"
 import CustomButton from "./CustomButton"
-import { createNewProject, fetchToken } from "@/lib/actions"
+import { createNewProject, fetchToken, updateProject } from "@/lib/actions"
 import { useRouter } from "next/navigation"
+import { createQueryString } from "@/utils"
 
-const ProjectForm = ({ type, session }: projectFormType) => {
+const ProjectForm = ({ type, session, project }: projectFormType) => {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [form, setForm] = useState({
-        title: "",
-        description: "",
-        image: "",
-        liveSiteUrl: "",
-        githubUrl: "",
-        category: "",
+        title: project?.title || "",
+        description: project?.description || "",
+        image: project?.image || "",
+        liveSiteUrl: project?.liveSiteUrl || "",
+        githubUrl: project?.githubUrl || "",
+        category: project?.category || "",
     }
 )
     const router = useRouter()
@@ -25,12 +26,19 @@ const ProjectForm = ({ type, session }: projectFormType) => {
     const handleFormSubmit = async (event: FormEvent) => {
         event.preventDefault()
 
+        setIsSubmitting(true)
+
         const { token } = await fetchToken()
+        
         try{
             if(type === 'create'){
                 await createNewProject(form, session.user?.id, token)
                 alert("You have successfully created a new project!")
                 router.back()
+            } else if(type === 'edit'){
+                await updateProject(form, project?.id as string, token)
+                alert("You have successfully updated the project!")
+                router.push(`/?${createQueryString('session', JSON.stringify(session))}`)
             }
         } catch(error){
             throw error
@@ -129,7 +137,6 @@ const ProjectForm = ({ type, session }: projectFormType) => {
                  title={`${isSubmitting ? (type === 'create' ? 'Creating' : 'Editing') : (type === 'create' ? 'Create' : 'Edit')}`}
                  leftIcon={isSubmitting ? null : '/plus.svg'}
                  isSubmitting={isSubmitting}
-                 handleClick={() => setIsSubmitting(true)}
                  bgColor="bg-[#3344AA]"
                  textColor="text-white"
                  />
