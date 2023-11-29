@@ -33,7 +33,7 @@ const CustomMenu = ({ title, state, filters, setState }: CustomMenuType) => {
                             {
                                 filters.map((item) => (
                                     <Menu.Item key={item}>
-                                        <button value={item} className="custom_menu-item" onClick={(event) => setState(event.currentTarget.value)}>
+                                        <button value={item} type="button" className="custom_menu-item" onClick={(event) => setState(event.currentTarget.value)}>
                                             {item}
                                         </button>
                                     </Menu.Item>
@@ -48,3 +48,4 @@ const CustomMenu = ({ title, state, filters, setState }: CustomMenuType) => {
 }
 
 export default CustomMenu
+

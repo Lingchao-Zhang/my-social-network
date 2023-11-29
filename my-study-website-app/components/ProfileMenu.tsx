@@ -7,6 +7,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { SessionInterface } from "@/types";
 import { useRouter } from "next/navigation";
 import { createQueryString } from "@/utils";
+import CustomButton from "./CustomButton";
 
 const ProfileMenu = ({ session }: { session: SessionInterface }) => {
     const router = useRouter()
@@ -80,7 +81,10 @@ const ProfileMenu = ({ session }: { session: SessionInterface }) => {
                 </Transition>
             </Menu>
             <Link href={`/create-project?${createQueryString('session', JSON.stringify(session))}`}>
-                Share Work
+                <CustomButton 
+                 title="Share Work"
+                 bgColor="bg-[#811888]"
+                 textColor="text-white"/>
             </Link>
         </div>
     )
